@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState({ movies: [] });
 
     useEffect(() => {
         fetch('http://127.0.0.1:3005/movies')
             .then((response) => response.json())
-            .then((data) => setMovies(data))
+            .then((data) => {
+                // console.log('Risposta API:', data);
+                setMovies(data);
+            })
             .catch((error) => console.error('Errore nel recupero dei film:', error));
     }, []);
 
@@ -14,8 +17,8 @@ const Home = () => {
         <div className="container">
             <h1>Lista dei film</h1>
             <div className="row">
-                {movies.map((movie) => (
-                    <div key={movie.id} className="col-md-4  mt-2 mb-3">
+                {movies.movies.map((movie) => (
+                    <div key={movie.id} className="col-md-4 mt-2 mb-3">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">{movie.title}</h5>
