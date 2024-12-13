@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ReviewForm from '../components/ReviewForm';
 
 const FilmDetail = () => {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
 
-    useEffect(() => {
+    const fetchMovieDetails = () => {
         fetch(`http://127.0.0.1:3005/movies/${id}`)
             .then((response) => response.json())
             .then((data) => setMovie(data))
             .catch((error) => console.error('Errore nel recupero del dettaglio:', error));
+    };
+
+    useEffect(() => {
+        fetchMovieDetails();
     }, [id]);
 
     if (!movie) return <div>Caricamento...</div>;
@@ -25,10 +30,11 @@ const FilmDetail = () => {
             <ul>
                 {movie.reviews.map((review) => (
                     <li key={review.id}>
-                        <strong>{review.reviewer}:</strong> {review.text}
+                        <strong>{review.name}:</strong> {review.text} <span>({review.vote}/5)</span>
                     </li>
                 ))}
             </ul>
+            <ReviewForm movieId={id} onReviewAdded={fetchMovieDetails} />
         </div>
     );
 };
