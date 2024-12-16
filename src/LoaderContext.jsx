@@ -6,12 +6,12 @@ export const LoaderProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const showLoader = () => {
-        console.log("Loader attivo");
+        // console.log("Loader attivo");
         setIsLoading(true);
     };
 
     const hideLoader = () => {
-        console.log("loader non attivo");
+        // console.log("loader non attivo");
         setIsLoading(false);
     };
 

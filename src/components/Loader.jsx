@@ -1,6 +1,11 @@
 import 'ldrs/ripples';
+import { useLoader } from "../LoaderContext";
+
 
 const Loader = () => {
+    const { isLoading } = useLoader();
+    // console.log("Stato del loader:", isLoading);
+    if (!isLoading) return null;
     return (
         <div style={loaderStyle}>
             <l-ripples size="80" speed="2" color="#007bff"></l-ripples>
