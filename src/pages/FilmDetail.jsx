@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReviewForm from '../components/ReviewForm';
+import { useLoader } from '../LoaderContext'
 
 const FilmDetail = () => {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
+    const { showLoader, hideLoader } = useLoader()
 
     const fetchMovieDetails = () => {
+        showLoader()
         fetch(`http://127.0.0.1:3005/movies/${id}`)
             .then((response) => response.json())
-            .then((data) => setMovie(data))
+            .then((data) => {
+                setMovie(data);
+                hideLoader();
+            })
             .catch((error) => console.error('Errore nel recupero del dettaglio:', error));
     };
 

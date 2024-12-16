@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react';
+import { useLoader } from "../LoaderContext";
 
 const Home = () => {
+    const { showLoader, hideLoader } = useLoader();
     const [movies, setMovies] = useState({ movies: [] });
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3005/movies')
+        showLoader();
+        fetch("http://127.0.0.1:3005/movies")
             .then((response) => response.json())
             .then((data) => {
-                // console.log('Risposta API:', data);
                 setMovies(data);
+                hideLoader();
             })
-            .catch((error) => console.error('Errore nel recupero dei film:', error));
+            .catch((error) => {
+                console.error("Errore nel recupero dei film:", error);
+                hideLoader();
+            });
     }, []);
 
     return (

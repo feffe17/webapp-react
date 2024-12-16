@@ -1,16 +1,24 @@
-import { useLoader } from "../contexts/LoaderContext";
-import { Ripple } from "ldrs";
+import 'ldrs/ripples';
 
 const Loader = () => {
-    const { isLoading } = useLoader();
-
-    if (!isLoading) return null;
-
     return (
-        <div className={style.loader}>
-            <Ripple color="#007bff" size={80} />
+        <div style={loaderStyle}>
+            <l-ripples size="80" speed="2" color="#007bff"></l-ripples>
         </div>
     );
+};
+
+const loaderStyle = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9999,
 };
 
 export default Loader;
